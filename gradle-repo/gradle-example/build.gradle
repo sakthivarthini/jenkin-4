@@ -1,30 +1,32 @@
 plugins {
-    id 'groovy'
-    id 'application'
-    id 'com.github.johnrengelman.shadow' version '5.2.0'
+    id 'java'
+    id 'org.springframework.boot' version '2.7.7'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'org.sonarqube' version '2.7'
+    id 'org.cyclonedx.bom' version '1.8.2'
 }
 
+group = 'com.logicfocus'
+version = project.hasProperty('version') ? version : '1.0'
+sourceCompatibility = '1.8'
 repositories {
-    jcenter()
+    mavenCentral()
+    jcenter() // Move jcenter() within repositories block
     flatDir {
         dirs 'lib'
     }
 }
 
-archivesBaseName = 'gradle-example'
-
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.codehaus.groovy:groovy:3.+'
-
-    // Groovy module dependency
     implementation 'org.codehaus.groovy:groovy-json:3.+'
-
-    // Strictly exact version of Maven dependency
     implementation 'com.codevineyard:hello-world:1.0.1!!'
-
-    // Dependency from local jar
     implementation ':simple-jar'
 }
+
+archivesBaseName = 'gradle-example'
 
 application {
     mainClassName = 'com.adjectivecolournoun.gradle.Greetz'
